@@ -30,7 +30,10 @@
         <li class="post-item">{{ post.no }}. {{ post.title }}</li>
         <!-- <li class="post-item">{{ post.title }}</li> -->
 
-        <div class="post-content" v-if="isVisible && post.no -1 == toggleContent">
+        <div
+          class="post-content"
+          v-if="isVisible && post.no -1 == toggleContent"
+        >
           <li class="post-item">{{ posts[toggleContent].title }}</li>
           <li class="post-item">{{ posts[toggleContent].content }}</li>
           <button>닫기</button>
@@ -103,12 +106,21 @@
         },
         methods: {
           isClicked(id) {
-            // console.log(this.isVisible);..c
-            // console.log(id);
+            if (this.isVisible == true) {
+              if (this.toggleContent == id - 1) {
+                return (this.isVisible = false);
+              } else {
+                this.toggleContent = id - 1;
+                return (this.isVisible = true);
+              }
+            } else {
+              this.toggleContent = id - 1;
+              return (this.isVisible = true);
+            }
+          },
+          isNoToggle() {
             this.toggleContent = id - 1;
-            // console.log(this.toggleContent);
-            if (this.isVisible == true )  return (this.isVisible = false);
-            if (this.isVisible == false ) return (this.isVisible = true);
+            return (this.isVisible = true);
           },
         },
       }).mount("#app");
