@@ -21,13 +21,10 @@
       <h1>게시판 목록 v2</h1>
 
       <!-- 목록 -->
-      <ul
-        v-for="post in posts"
-        :key="post.no"
-        class="post"
-        @click="isClicked(post.no)"
-      >
-        <li class="post-item">{{ post.no }}. {{ post.title }}</li>
+      <ul v-for="post in posts" :key="post.no" class="post">
+        <li class="post-item" @click="isClicked(post.no)">
+          {{ post.no }}. {{ post.title }}
+        </li>
         <!-- <li class="post-item">{{ post.title }}</li> -->
 
         <div
@@ -36,7 +33,7 @@
         >
           <li class="post-item">{{ posts[toggleContent].title }}</li>
           <li class="post-item">{{ posts[toggleContent].content }}</li>
-          <button>닫기</button>
+          <button @click="isTrueToggle(post.no)">닫기</button>
         </div>
       </ul>
 
@@ -106,6 +103,9 @@
         },
         methods: {
           isClicked(id) {
+            this.isVisible ? this.isTrueToggle(id) : this.isNoToggle(id);
+          },
+          isTrueToggle(id) {
             if (this.isVisible == true) {
               if (this.toggleContent == id - 1) {
                 return (this.isVisible = false);
@@ -113,12 +113,9 @@
                 this.toggleContent = id - 1;
                 return (this.isVisible = true);
               }
-            } else {
-              this.toggleContent = id - 1;
-              return (this.isVisible = true);
             }
           },
-          isNoToggle() {
+          isNoToggle(id) {
             this.toggleContent = id - 1;
             return (this.isVisible = true);
           },
