@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 게시판 목록</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- css 문단 -->
+    <style>
+      .post {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>게시판 목록 v2</h1>
+
+      <!-- 목록 -->
+      <ul
+        v-for="post in posts"
+        :key="post.no"
+        class="post"
+        @click="isClicked(post.no)"
+      >
+        <li class="post-item">{{ post.no }}. {{ post.title }}</li>
+        <!-- <li class="post-item">{{ post.title }}</li> -->
+
+        <div class="post-content" v-if="isVisible && post.no -1 == toggleContent">
+          <li class="post-item">{{ posts[toggleContent].title }}</li>
+          <li class="post-item">{{ posts[toggleContent].content }}</li>
+          <button>닫기</button>
+        </div>
+      </ul>
+
+      <!-- 내용 -->
+    </div>
+
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            posts: [
+              {
+                no: 1,
+                title: "Vue.js 기초 배우기",
+                content:
+                  "Vue.js는 사용자 인터페이스를 구축하기 위한 프로그레시브 프레임워크입니다.",
+              },
+              {
+                no: 2,
+                title: "자바스크립트 ES6 문법",
+                content: "ES6는 JavaScript의 최신 문법을 포함합니다.",
+              },
+              {
+                no: 3,
+                title: "Node.js와 Express",
+                content: "Node.js는 서버에서 JS 실행 환경입니다.",
+              },
+              {
+                no: 4,
+                title: "MongoDB 기본 개념",
+                content: "MongoDB는 NoSQL 데이터베이스입니다.",
+              },
+              {
+                no: 5,
+                title: "프론트엔드와 백엔드",
+                content: "프론트는 화면, 백엔드는 서버입니다.",
+              },
+              {
+                no: 6,
+                title: "비동기 프로그래밍",
+                content: "콜백, 프로미스, async/await가 있습니다.",
+              },
+              {
+                no: 7,
+                title: "Vue Router 사용법",
+                content: "페이지 이동을 쉽게 처리합니다.",
+              },
+              {
+                no: 8,
+                title: "컴포넌트 기반 개발",
+                content: "UI를 작은 단위로 쪼갭니다.",
+              },
+              {
+                no: 9,
+                title: "CSS와 SCSS 차이",
+                content: "SCSS는 CSS 확장입니다.",
+              },
+              {
+                no: 10,
+                title: "Git과 GitHub",
+                content: "버전관리와 원격 저장소입니다.",
+              },
+            ],
+            toggleContent: 0,
+            isVisible: false,
+          };
+        },
+        methods: {
+          isClicked(id) {
+            // console.log(this.isVisible);..c
+            // console.log(id);
+            this.toggleContent = id - 1;
+            // console.log(this.toggleContent);
+            if (this.isVisible == true )  return (this.isVisible = false);
+            if (this.isVisible == false ) return (this.isVisible = true);
+          },
+        },
+      }).mount("#app");
+    </script>
+
+    <style>
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .post-item {
+        cursor: pointer;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+      }
+
+      .post-item:hover {
+        background: #f4f4f4;
+      }
+
+      .post-content {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #fff;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: none;
+        background: #ff6b6b;
+        color: white;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      button:hover {
+        background: #ff4f4f;
+      }
+
+      .arrow {
+        font-size: 0.8em;
+        color: #888;
+      }
+    </style>
+  </body>
+</html>
